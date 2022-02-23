@@ -1,0 +1,20 @@
+.question-span{
+    margin: 10px;
+    /* font-weight: bold; */
+    font-size: 20px;
+}
+
+
+button, h1{
+    margin-left: 10px;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, orange, red);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.question-div{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-color: linear-gradient(to left, violet, indigo, blue, green, orange, red);
+}
