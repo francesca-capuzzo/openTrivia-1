@@ -1,20 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300&display=swap');
+
 .question-span{
     margin: 10px;
     /* font-weight: bold; */
     font-size: 20px;
+    font-weight: 500;
+    color: white;
+    
 }
 
+h1{
+    margin-left: 5%;
+    /* background-image: linear-gradient(to left, violet, indigo, blue, green, orange, red); */
+    font-weight: 500;
+    color: white;
+}
 
-button, h1{
+button{
+    margin-top: 10px;
     margin-left: 10px;
-    background-image: linear-gradient(to left, violet, indigo, blue, green, orange, red);
-    -webkit-background-clip: text;
-    color: transparent;
+    font-weight: 300;
 }
 
 .question-div{
-    margin-top: 10px;
+    margin-top: 0px;
     margin-bottom: 20px;
     border-style: solid;
     border-color: linear-gradient(to left, violet, indigo, blue, green, orange, red);
+    /* max-width: 800px;
+    display: block; */
+    width:800px;
+    height:100px;
+    border-radius: 5px;
+    border-color: white;
+    border-width: 2px;
+ 
+}
+
+#main-container{
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    margin:0 auto;
+    background:transparent;
+    margin-left: -250px;
+    margin-right: 250px;
+    margin-top:-250px;
+}
+
+body{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('./quiz.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.points{
+    display: flex;
+    position: relative;
+    font-weight: 500;
+    color: white;
 }
