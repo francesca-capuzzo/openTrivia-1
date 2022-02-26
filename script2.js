@@ -1,15 +1,81 @@
+
+const triviaArray = []; 
+const button = document.getElementById('button')
+const amountText = document.getElementById('amount')
+const tempAmount = document.getElementById('trivia_amount');
+const amount = tempAmount.value;
+const tempCateg = document.getElementById('triviaCategory');
+const category = tempCateg.value;
+const tempDiffi = document.getElementById('difficultyTrivia');
+const difficulty = tempDiffi.value;
+
+
+
+function selectCategory(category) {
+    let tempLink = '';
+    if (category === 'any') {
+        return tempLink;
+    } else {
+        tempLink= '&category=' + category
+    }
+    ;
+    return tempLink
+}
+
+function selectDifficulty(difficulty) {
+   
+    let tempDif = '';
+
+    if (difficulty === 'any') {
+
+        return tempDif;
+
+    } else {
+
+        tempDif= '&difficulty=' + difficulty
+    }
+    ;
+    return tempDif
+}
+
+function createLink() {
+    let link = '';
+    console.log(link);
+    const dif = selectDifficulty(difficulty);
+    const cat = selectCategory(category);
+    link = 'https://opentdb.com/api.php?amount=' + amount + cat + dif;
+    console.log(link);
+    return link
+}
+function hiddenAllInput() {
+    tempAmount.style.display='none';
+    tempCateg.style.display='none';
+    tempDiffi.style.display='none';
+    amountText.style.display='none';
+    button.style.display='none';
+}
+
+
+
+
 function loadTrivia() {
-    fetch('https://opentdb.com/api.php?amount=10')
+
+
+
+
+    fetch(createLink())
+    .then(hiddenAllInput())
     .then(response => response.json())
     .then(createTrivias)
     .catch(error => console.log(error));
+    
 }
 
 let points = 0;
 
 function createTrivias(data) {                     
     const results = data.results;                  
-    const triviaArray = [];                        
+                           
     for (const res of results) {                  
         const trivia = new Trivia(res.category, res.type, res.difficulty, res.question, res.correct_answer, res.incorrect_answers); 
         triviaArray.push(trivia);
@@ -44,16 +110,11 @@ function displayTrivia(triviaArray) {
     let mainDiv = document.getElementById('main-container');
     const userPoints = document.createElement('div');
     userPoints.className = 'points'
-    let textNode = document.createTextNode('User Points:'+ " " + points + " / 10");
-    
-    
-
     for (const question of triviaArray) {
         let divQuestion = createDivQuestion(question);
         mainDiv.appendChild(divQuestion);
     }
-    userPoints.appendChild(textNode);
-    mainDiv.appendChild(userPoints);
+    
     return mainDiv;
 }
 
@@ -80,7 +141,7 @@ function createButtonAnswer(answer, trivia, question) {
 
 
 
-
+let questionsDone = 0
 function buttonClick(event, trivia, question) {
     let text = event.originalTarget.firstChild.textContent;
     
@@ -107,9 +168,88 @@ function buttonClick(event, trivia, question) {
 
     
     for (let i = 0; i < buttons.length; i++) {
-        
+        if (!correct && text === trivia.correctAnswer) {
+            answerButton.style.backgroundColor = 'green';
+        }
         buttons[i].outerHTML = buttons[i].outerHTML; //removEventListener non funziona quindi prendo outerHTML che è l'elemento senza funzioni (solo html e css) e lo metto uguale a se stesso
+    }
+    questionsDone++;
+    if (questionsDone === triviaArray.length) {
+        //alert('Hai risposto a tutto!')
+        this.showResult();
     }
 }
 
 
+function showResult() {
+    // Get the modal
+    const modal = document.getElementById("myModal");
+    modal.style.display = 'flex';
+
+    const modalContent = document.getElementById("modal-content");
+    
+    const image = document.getElementById('image-result');
+
+    const pointsText = document.createElement('p');
+    pointsText.className = 'points-done';
+
+    const resultText = document.createElement('p');
+    resultText.className = 'points-done';
+
+    pointsText.innerHTML = '';
+    resultText.innerHTML = '';
+
+    // Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    //modal.style.display = "block";
+
+    let questionsNumber = triviaArray.length;
+    if (points >=0 && points <= (questionsNumber / 3)) {
+        image.src = './images/sad-face.png';
+        pointsText.appendChild(document.createTextNode(points + ' / ' + (triviaArray.length)));
+        resultText.appendChild(document.createTextNode('Sei proprio scarso!'));
+
+        modalContent.appendChild(pointsText);
+        modalContent.appendChild(resultText);
+    }
+
+    if (points >= (questionsNumber / 3)+1 && points <= (questionsNumber / 3)+(questionsNumber / 3)) {
+        image.src = './images/neutral-face.jpg';
+        pointsText.appendChild(document.createTextNode(points + ' / ' + (triviaArray.length)));
+        resultText.appendChild(document.createTextNode('Potresti fare meglio...'));
+
+        modalContent.appendChild(pointsText);
+        modalContent.appendChild(resultText);
+    }
+
+    if (points >= (questionsNumber / 3)+(questionsNumber / 3) && points <= questionsNumber) {
+        image.src = './images/happy-face.jpg';
+        pointsText.appendChild(document.createTextNode(points + ' / ' + (triviaArray.length)));
+        resultText.appendChild(document.createTextNode('Sei un campione!'));
+
+        modalContent.appendChild(pointsText);
+        modalContent.appendChild(resultText);
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+
+        pointsText.innerHTML = '';
+        resultText.innerHTML = '';
+        location.reload();
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+
+            pointsText.innerHTML = '';
+            resultText.innerHTML = '';
+            location.reload();
+        }
+    }
+}
