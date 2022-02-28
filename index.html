@@ -11,13 +11,28 @@
 </head>
 
 <body>
-    <center>
     <h1 id="title">LE DOMANDONE DEL QUIZZONE</h1>
+    <div>
+        <select id="category-select">
+            <option value="-1">All Categories</option>
+        </select>
+        <select id="difficulty-select">
+            <option value="-1">All Difficulties</option>
+        </select>
+        <select id="type-select">
+            <option value="-1">All Types</option>
+        </select>
+        <button onclick="loadTrivia()">Generate Questions</button>
+    </div>
+
+
+
+<!-- 
     <h2 id="amount">AMOUNT</h2>
     <input type="number" name="trivia_amount" id="trivia_amount" class="form-control" min="1" max="50" value="10">
-    <br>
+    <br> -->
 
-    <select name="trivia_category" class="form-control" id="triviaCategory">
+    <!-- <select name="trivia_category" class="form-control" id="triviaCategory">
         <option value="any">Any Category</option>
         <option value="9">General Knowledge</option>
         <option value="10">Entertainment: Books</option>
@@ -43,8 +58,8 @@
         <option value="30">Science: Gadgets</option>
         <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
         <option value="32">Entertainment: Cartoon &amp; Animations</option>
-    </select>
-    <br>
+    </select> -->
+    <!-- <br>
 
     <select name="trivia_difficulty" class="form-control" id="difficultyTrivia">
         <option value="any">Any Difficulty</option>
@@ -52,17 +67,17 @@
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
     </select>
-    <br>
-    <button onclick="loadTrivia()" id="button">GENERATE TRIVIA </button>
+    <br> -->
+    <!-- <button onclick="loadTrivia()" id="button">GENERATE TRIVIA </button> -->
 
     <!-- <h1 class="main-title">Piano della conquista del mondo</h1>
 
-    <h2 class="main-title">Da non rivelare</h2>
+    <h2 class="main-title">Da non rivelare</h2>-->
 
     <ol id="trivia-list">
 
-    </ol> -->
-    <div id="main-container">
+    </ol>
+    <!--<div id="main-container"> -->
 
     </div>
     <div id="myModal" class="modal">
@@ -75,11 +90,15 @@
         </div>
     
     </div>
-    </center>
 </body>
+
 <script src="./utility.js"></script>
 <script src="./trivia.js"></script>
-<!-- <script src="./script.js"></script> -->
-<script src="./script2.js"></script>
+<script src="./script.js"></script>
+<script>
+    initQuiz();
+</script>
+
+<!-- <script src="./script2.js"></script> -->
 
 </html>
